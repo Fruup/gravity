@@ -326,7 +326,7 @@
 #define INTERNAL_CONVERT_STRING(_v,_check)          _v = convert_value2string(vm,_v); CHECK_VALID(_check,_v, "Unable to convert object to String")
 
 #define NEW_FUNCTION(_fptr)                         (gravity_function_new_internal(NULL, NULL, _fptr, 0))
-#define NEW_CLOSURE_VALUE(_fptr)                    ((gravity_value_t){.isa = gravity_class_closure,.p = (gravity_object_t *)gravity_closure_new(NULL, NEW_FUNCTION(_fptr))})
+#define NEW_CLOSURE_VALUE(_fptr)                    (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_closure,.p = (gravity_object_t *)gravity_closure_new(NULL, NEW_FUNCTION(_fptr))})
 
 #define FUNCTION_ISA_SPECIAL(_f)                    (OBJECT_ISA_FUNCTION(_f) && (_f->tag == EXEC_TYPE_SPECIAL))
 #define FUNCTION_ISA_DEFAULT_GETTER(_f)             ((_f->index < GRAVITY_COMPUTED_INDEX) && (_f->special[EXEC_TYPE_SPECIAL_GETTER] == NULL))

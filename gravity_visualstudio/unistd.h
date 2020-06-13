@@ -1,4 +1,4 @@
-#ifdef _MSC_VER
+#if (defined _MSC_VER) && (defined COMPILE_GRAVITY_LIBRARY)
 
 #pragma once
 #pragma comment(lib, "Shlwapi.lib")

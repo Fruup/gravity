@@ -9,6 +9,12 @@
 #ifndef __GRAVITY_MACROS__
 #define __GRAVITY_MACROS__
 
+#ifndef COMPILE_GRAVITY_LIBRARY
+#define CONSTRUCT_FROM_INITIALIZER_LIST(_typename) _typename
+#else
+#define CONSTRUCT_FROM_INITIALIZER_LIST(_typename) (_typename)
+#endif
+
 #define AUTOLENGTH                          UINT32_MAX
 
 // MARK: -
@@ -36,16 +42,16 @@
 #define VALUE_AS_BOOL(x)                    ((x).n)
 
 // MARK: -
-#define VALUE_FROM_ERROR(msg)               ((gravity_value_t){.isa = NULL, .p = ((gravity_object_t *)msg)})
+#define VALUE_FROM_ERROR(msg)               (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = NULL, .p = ((gravity_object_t *)msg)})
 #define VALUE_NOT_VALID                     VALUE_FROM_ERROR(NULL)
-#define VALUE_FROM_OBJECT(obj)              ((gravity_value_t){.isa = ((gravity_object_t *)(obj)->isa), .p = (gravity_object_t *)(obj)})
+#define VALUE_FROM_OBJECT(obj)              (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = ((gravity_object_t *)(obj)->isa), .p = (gravity_object_t *)(obj)})
 #define VALUE_FROM_STRING(_vm,_s,_len)      (gravity_string_to_value(_vm, _s, _len))
 #define VALUE_FROM_CSTRING(_vm,_s)          (gravity_string_to_value(_vm, _s, AUTOLENGTH))
-#define VALUE_FROM_INT(x)                   ((gravity_value_t){.isa = gravity_class_int, .n = (x)})
-#define VALUE_FROM_FLOAT(x)                 ((gravity_value_t){.isa = gravity_class_float, .f = (x)})
-#define VALUE_FROM_NULL                     ((gravity_value_t){.isa = gravity_class_null, .n = 0})
-#define VALUE_FROM_UNDEFINED                ((gravity_value_t){.isa = gravity_class_null, .n = 1})
-#define VALUE_FROM_BOOL(x)                  ((gravity_value_t){.isa = gravity_class_bool, .n = (x)})
+#define VALUE_FROM_INT(x)                   (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_int, .n = (x)})
+#define VALUE_FROM_FLOAT(x)                 (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_float, .f = (x)})
+#define VALUE_FROM_NULL                     (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_null, .n = 0})
+#define VALUE_FROM_UNDEFINED                (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_null, .n = 1})
+#define VALUE_FROM_BOOL(x)                  (CONSTRUCT_FROM_INITIALIZER_LIST(gravity_value_t){.isa = gravity_class_bool, .n = (x)})
 #define VALUE_FROM_FALSE                    VALUE_FROM_BOOL(0)
 #define VALUE_FROM_TRUE                     VALUE_FROM_BOOL(1)
 #define STATICVALUE_FROM_STRING(_v,_s,_l)   gravity_string_t __temp = {.isa = gravity_class_string, .s = (char *)_s, .len = (uint32_t)_l, }; \
