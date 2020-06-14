@@ -1871,8 +1871,12 @@ bool gravity_vm_isaborted (gravity_vm *vm) {
     return vm->aborted;
 }
 
-void gravity_vm_setaborted (gravity_vm *vm) {
+void gravity_vm_setaborted(gravity_vm* vm) {
     vm->aborted = true;
+}
+
+void gravity_vm_resetaborted(gravity_vm* vm) {
+    vm->aborted = false;
 }
 
 char *gravity_vm_anonymous (gravity_vm *vm) {
